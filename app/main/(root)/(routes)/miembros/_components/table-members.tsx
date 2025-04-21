@@ -109,7 +109,6 @@ const TableMembers = ({ data }: TableMembersProp) => {
                 key={member.id}
                 className="flex items-center justify-between p-4 border rounded-lg shadow-md"
               >
-                {/* Parte izquierda*/}
                 <div className="flex flex-col">
                   <span className="text-lg font-semibold">
                     {highlightText(member.apellidos, searchTerm)}
@@ -118,7 +117,6 @@ const TableMembers = ({ data }: TableMembersProp) => {
                     {highlightText(member.nombres, searchTerm)}
                   </span>
                 </div>
-                {/* Parte derecha*/}
                 <div className="flex flex-col items-end">
                   <span className="text-lg font-bold">
                     {highlightText(

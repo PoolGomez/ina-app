@@ -30,48 +30,6 @@ const MemberClient = ({data}: MemberClientProps) => {
         <Separator />
 
         <TableMembers data={data} />
-            {/* <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Directorio de Miembros</CardTitle>
-                <Link href="/members/new">
-                    <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Nuevo Miembro
-                    </Button>
-                </Link>
-                </CardHeader>
-                <CardContent>
-                {
-                    data.length
-                }
-
-                <Table>
-                    <TableHeader>
-                    <TableRow>
-                        <TableHead>Apellidos</TableHead>
-                        <TableHead>Nombres</TableHead>
-                        <TableHead>Congregación</TableHead>
-                        <TableHead>Documento</TableHead>
-                        <TableHead>Teléfono</TableHead>
-                        <TableHead>Email</TableHead>
-                    </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                    {data.map((member) => (
-                        <TableRow key={member.id}>
-                        <TableCell>{member.apellidos}</TableCell>
-                        <TableCell>{member.nombres}</TableCell>
-                        <TableCell>{member.congregacion}</TableCell>
-                        <TableCell>{member.num_documento}</TableCell>
-                        <TableCell>{member.telefono}</TableCell>
-                        <TableCell>{member.email}</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-                </CardContent>
-            </Card> */}
-        
         </>
     )
 }
