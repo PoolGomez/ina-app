@@ -38,13 +38,13 @@ const memberFormSchema = z.object({
   nombres: z.string().min(1, "Los nombres son requeridos"),
   genero: z.string().min(1, "El género es requerido"),
   fecha_nacimiento: z.string().min(1, "La fecha de nacimiento es requerida"),
-  lugar_nacimiento: z.string().min(1, "El lugar de nacimiento es requerido"),
+  lugar_nacimiento: z.string(),
   fecha_bautismo: z.string(),
   fecha_sellamiento: z.string(),
   num_documento: z.string().min(1, "El documento de identidad es requerido"),
   estado_civil: z.string(),
   fecha_matrimonio_civil: z.string(),
-  direccion: z.string().min(1, "El domicilio es requerido"),
+  direccion: z.string(),
   telefono: z.string(),
   celular: z.string(),
   ocupacion: z.string(),
@@ -159,10 +159,10 @@ export const CreateMemberForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="CANTO GRANDE 9">
-                          CANTO GRANDE 9
+                        <SelectItem value="CG9">
+                          Canto Grande 9
                         </SelectItem>
-                        <SelectItem value="HUANTA">HUANTA</SelectItem>
+                        <SelectItem value="HU">Huanta</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -200,7 +200,7 @@ export const CreateMemberForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="LIMA 4">LIMA 4</SelectItem>
+                        <SelectItem value="L4">Lima 4</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -239,7 +239,7 @@ export const CreateMemberForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="PERÚ">PERÚ</SelectItem>
+                        <SelectItem value="PE">Perú</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -261,7 +261,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Apellidos</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -274,7 +274,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Nombres</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -299,8 +299,8 @@ export const CreateMemberForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="M">MASCULINO</SelectItem>
-                        <SelectItem value="F">FEMENINO</SelectItem>
+                        <SelectItem value="M">Masculino</SelectItem>
+                        <SelectItem value="F">Femenina</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -327,7 +327,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Lugar de Nacimiento</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -343,7 +343,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Documento de Identidad</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -366,12 +366,12 @@ export const CreateMemberForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="S">SOLTERO(A)</SelectItem>
-                        <SelectItem value="C">CASAD0(A)</SelectItem>
+                        <SelectItem value="S">Soltero(a)</SelectItem>
+                        <SelectItem value="C">Casado(a)</SelectItem>
                         <SelectItem value="D">
-                          DIVORCIADO(A)
+                          Divorciado(a)
                         </SelectItem>
-                        <SelectItem value="V">VIUDO(A)</SelectItem>
+                        <SelectItem value="V">Viudo(a)</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -402,7 +402,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Ocupación</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -451,7 +451,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Actividad en INA</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -501,7 +501,7 @@ export const CreateMemberForm = () => {
                   <FormItem>
                     <FormLabel>Domicilio</FormLabel>
                     <FormControl>
-                      <Input {...field} className="text-transform: uppercase" />
+                      <Input {...field} className="" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -518,7 +518,7 @@ export const CreateMemberForm = () => {
                       <Input
                         type="email"
                         {...field}
-                        className="text-transform: uppercase"
+                        className=""
                       />
                     </FormControl>
                     <FormMessage />

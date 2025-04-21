@@ -29,13 +29,13 @@ const memberFormSchema = z.object({
     nombres: z.string().min(1, "Los nombres son requeridos"),
     genero: z.string().min(1, "El género es requerido"),
     fecha_nacimiento: z.string().min(1, "La fecha de nacimiento es requerida"),
-    lugar_nacimiento: z.string().min(1, "El lugar de nacimiento es requerido"),
+    lugar_nacimiento: z.string(),
     fecha_bautismo: z.string(),
     fecha_sellamiento: z.string(),
     num_documento: z.string().min(1, "El documento de identidad es requerido"),
     estado_civil: z.string(),
     fecha_matrimonio_civil: z.string(),
-    direccion: z.string().min(1, "El domicilio es requerido"),
+    direccion: z.string(),
     telefono: z.string(),
     celular: z.string(),
     ocupacion: z.string(),
@@ -148,10 +148,10 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="CANTO GRANDE 9">
-                            CANTO GRANDE 9
+                          <SelectItem value="CG9">
+                            Canto Grande 9
                           </SelectItem>
-                          <SelectItem value="HUANTA">HUANTA</SelectItem>
+                          <SelectItem value="HU">Huanta</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -178,7 +178,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="LIMA 4">LIMA 4</SelectItem>
+                          <SelectItem value="L4">Lima 4</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -204,7 +204,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="PERÚ">PERÚ</SelectItem>
+                          <SelectItem value="PE">Perú</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -226,7 +226,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Apellidos</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -239,7 +239,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Nombres</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -266,8 +266,8 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="M">MASCULINO</SelectItem>
-                          <SelectItem value="F">FEMENINO</SelectItem>
+                          <SelectItem value="M">Masculino</SelectItem>
+                          <SelectItem value="F">Femenina</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -294,7 +294,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Lugar de Nacimiento</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -310,7 +310,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Documento de Identidad</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -335,12 +335,13 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="SOLTERO(A)">SOLTERO(A)</SelectItem>
-                          <SelectItem value="CASAD0(A)">CASAD0(A)</SelectItem>
-                          <SelectItem value="DIVORCIADO(A)">
-                            DIVORCIADO(A)
+                        <SelectItem value="M">Menor de Edad</SelectItem>
+                          <SelectItem value="S">Soltero(a)</SelectItem>
+                          <SelectItem value="C">Casado(a)</SelectItem>
+                          <SelectItem value="D">
+                            Divorciado(a)
                           </SelectItem>
-                          <SelectItem value="VIUDO(A)">VIUDO(A)</SelectItem>
+                          <SelectItem value="V">Viudo(a)</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -371,7 +372,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Ocupación</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -420,7 +421,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Actividad en INA</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -471,7 +472,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                     <FormItem>
                       <FormLabel>Domicilio</FormLabel>
                       <FormControl>
-                        <Input disabled={isLoading} {...field} className="text-transform: uppercase" />
+                        <Input disabled={isLoading} {...field} className="" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -489,7 +490,7 @@ export const MemberForm = ({data}:MemberFormProps) => {
                           type="email"
                           disabled={isLoading}
                           {...field}
-                          className="text-transform: uppercase"
+                          className=""
                         />
                       </FormControl>
                       <FormMessage />

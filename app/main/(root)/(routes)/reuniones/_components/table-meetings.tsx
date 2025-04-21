@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { CellAction } from "./cell-action";
 import { format, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { getCongregationName } from "@/lib/data";
 
 interface TableMeetingsProp {
     data: Meeting[]
@@ -71,6 +72,9 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
           if(value === meeting.fecha){
             return formatDate(value).toString().toLowerCase().includes(searchTerm.toLowerCase())
           }
+          if (value === meeting.congregacion) {
+            return getCongregationName(value).toLowerCase().includes(searchTerm.toLowerCase());
+          }
           return value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       }
       
@@ -126,7 +130,7 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
                     {highlightText( formatDate(meeting.fecha), searchTerm)}
                   </span>
                   <span className="text-sm text-gray-500">
-                    {highlightText(meeting.congregacion, searchTerm)}
+                    {highlightText(getCongregationName(meeting.congregacion), searchTerm)}
                   </span>
                 </div>
                 {/* Parte derecha*/}
@@ -186,7 +190,7 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
                     {highlightText( formatDate(meeting.fecha), searchTerm)}
                   </td>
                   <td className="p-3 text-black-foreground">
-                    {highlightText( meeting.congregacion , searchTerm)}
+                    {highlightText( getCongregationName(meeting.congregacion) , searchTerm)}
                   </td>
                   <td className="p-3 text-black-foreground">
                     {meeting.estado ? (

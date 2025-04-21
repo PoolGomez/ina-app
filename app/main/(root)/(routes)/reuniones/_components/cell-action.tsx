@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreVertical, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modal/alert-modal";
-import { DeleteMemberAction } from "@/actions/member-action";
+import { DeleteMeetingAction } from "@/actions/meeting-action";
 
 interface CellActionProps {
   id: string;
@@ -39,7 +39,7 @@ export const CellAction = ({
   const onDelete = async () => {
     try {
       setIsLoading(true);
-      await DeleteMemberAction(id);
+      await DeleteMeetingAction(id);
       toast.success("Reunion Eliminado");
       setIsLoading(false);
       setOpen(false);

@@ -36,7 +36,6 @@ export const GetMembersAction = async () => {
       id: doc.id,
       ...doc.data(),
     })) as Member[];
-    console.log("membersData:",membersData)
     return membersData;
   } catch (error) {
     throw new Error(

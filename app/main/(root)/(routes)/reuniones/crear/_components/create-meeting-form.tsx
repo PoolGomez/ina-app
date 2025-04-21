@@ -146,8 +146,8 @@ export const CreateMeetingForm = () => {
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="CANTO GRANDE 9">CANTO GRANDE 9</SelectItem>
-                  <SelectItem value="HUANTA">HUANTA</SelectItem>
+                  <SelectItem value="CG9">Canto Grande 9</SelectItem>
+                  <SelectItem value="HU">Huanta</SelectItem>
                 </SelectContent>
               </Select>
             </div>
