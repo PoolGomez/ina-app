@@ -97,6 +97,8 @@ export const MemberForm = ({data}:MemberFormProps) => {
             setIsLoading(false);
             router.push(`/main/miembros`);
             }, 2000);
+        }finally{
+          router.refresh();
         }
     };
     
