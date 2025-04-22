@@ -1,11 +1,24 @@
-import { GetMeetingsAction } from "@/actions/meeting-action"
+"use client"
 import MeetingClient from "./_components/client"
 import { Meeting } from "@/types-db"
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useEffect, useState } from "react";
 
-const ReunionesPage = async() => {
+const ReunionesPage = () => {
 
 
-  const meetings = (await GetMeetingsAction()) as Meeting[]
+  // const meetings = (await GetMeetingsAction()) as Meeting[]
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "meetings"), (snapshot) => {
+      const dataMeetings: Meeting[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Meeting[];
+      setMeetings(dataMeetings);
+    });
+    // Devuelve la función de unsubscribe para que puedas dejar de escuchar cuando sea necesario
+    return unsubscribe;
+  }, []);
+
 
     return (
       <div className="flex-col">

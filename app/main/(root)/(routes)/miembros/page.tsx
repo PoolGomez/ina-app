@@ -21,8 +21,8 @@ const MembersPage = () => {
   const [members, setMembers] = useState<Member[]>([]);
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "members"), (snapshot) => {
-      const members: Member[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Member[];
-      setMembers(members);
+      const dataMembers: Member[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Member[];
+      setMembers(dataMembers);
     });
     // Devuelve la función de unsubscribe para que puedas dejar de escuchar cuando sea necesario
     return unsubscribe;
