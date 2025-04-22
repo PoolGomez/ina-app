@@ -9,7 +9,8 @@ import {
   doc,
   getDoc,
   getDocs,
-  orderBy,
+  onSnapshot,
+  // orderBy,
   query,
   updateDoc,
   where,
@@ -28,21 +29,30 @@ export const CreateMemberAction = async (miembro: Member) => {
     );
   }
 };
-export const GetMembersAction = async () => {
-  try {
-    const q = query(collection(db, collectionName), orderBy("apellidos"));
-    const querySnapShot = await getDocs(q);
-    const membersData = querySnapShot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Member[];
-    return membersData;
-  } catch (error) {
-    throw new Error(
-      error instanceof Error ? error.message : "Error GetMembersAction"
-    );
-  }
+// export const GetMembersAction = async () => {
+//   try {
+//     const q = query(collection(db, collectionName), orderBy("apellidos"));
+//     const querySnapShot = await getDocs(q);
+//     const membersData = querySnapShot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     })) as Member[];
+//     return membersData;
+//   } catch (error) {
+//     throw new Error(
+//       error instanceof Error ? error.message : "Error GetMembersAction"
+//     );
+//   }
+// };
+export const GetMembersAction = (setMembers: (members: Member[]) => void) => {
+  const unsubscribe = onSnapshot(collection(db, collectionName), (snapshot) => {
+    const members: Member[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Member[];
+    setMembers(members);
+  });
+  // Devuelve la función de unsubscribe para que puedas dejar de escuchar cuando sea necesario
+  return unsubscribe;
 };
+
 export const GetMembersByGroupIdAction = async (groupId: string) => {
   try {
     const q = query(collection(db, collectionName), where("grupo","==",groupId));
