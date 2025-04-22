@@ -1,8 +1,10 @@
 "use client"
 import { Member } from "@/types-db";
-import { GetMembersAction } from "@/actions/member-action";
+// import { GetMembersAction } from "@/actions/member-action";
 import MemberClient from "./_components/client";
 import { useEffect, useState } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 // import { redirect } from "next/navigation";
 
 const MembersPage = () => {
@@ -18,8 +20,12 @@ const MembersPage = () => {
   
   const [members, setMembers] = useState<Member[]>([]);
   useEffect(() => {
-    const unsubscribe = GetMembersAction(setMembers);
-    return () => unsubscribe(); // Limpia la suscripción al desmontar el componente
+    const unsubscribe = onSnapshot(collection(db, "members"), (snapshot) => {
+      const members: Member[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Member[];
+      setMembers(members);
+    });
+    // Devuelve la función de unsubscribe para que puedas dejar de escuchar cuando sea necesario
+    return unsubscribe;
   }, []);
 
   return (

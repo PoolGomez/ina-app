@@ -44,7 +44,7 @@ export const CreateMemberAction = async (miembro: Member) => {
 //     );
 //   }
 // };
-export const GetMembersAction = (setMembers: (members: Member[]) => void) => {
+export const GetMembersAction = async(setMembers: (members: Member[]) => void) => {
   const unsubscribe = onSnapshot(collection(db, collectionName), (snapshot) => {
     const members: Member[] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Member[];
     setMembers(members);
