@@ -2,7 +2,9 @@
 import { CreateMeetingAction } from "@/actions/meeting-action";
 import { Heading } from "@/app/main/(root)/_components/heading";
 import { Button } from "@/components/ui/button";
+// import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -12,33 +14,19 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { AsistenciaDetalle, Meeting, Member } from "@/types-db";
+import { Meeting, Member } from "@/types-db";
 import { ArrowLeftCircleIcon, Loader, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { AttendanceButton } from "../../_components/button-attendance";
-import { congregaciones, typeMeeting } from "@/lib/data";
+import { grupos } from "@/lib/data";
 import { GetMembersByCongregationAndGroupAction } from "@/actions/member-action";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
 
-
-// const AsistenciaDetalleSchema = z.object({
-//   miembroId: z.string(),
-//   valor: z.enum(['A', 'T', 'F']),
-// });
-const meetingFormSchema = z.object({
-  nombre: z.string().min(1, "El nombre es requerida"),
-  fecha: z.string().min(1, "La fecha es requerida"),
-  congregacion: z.string().min(1, "La congregación es requerida"),
-  grupo: z.string().min(1, "El grupo es requerido"),
-  // detalle: z.array(AsistenciaDetalleSchema),
-});
-
+interface AsistenciaDetalle {
+  miembroId: string;
+  valor: "A" | "T" | "F";
+}
 
 export const CreateMeetingForm = () => {
   const router = useRouter();
@@ -46,35 +34,21 @@ export const CreateMeetingForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [miembros, setMiembros] = useState<Member[]>([]);
-  // const [nombre, setNombre] = useState("");
-  // const [grupo, setGrupo] = useState("");
-  // const [congregacion, setCongregacion] = useState("");
-  // const [fecha, setFecha] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [grupo, setGrupo] = useState("");
+  const [congregacion, setCongregacion] = useState("");
+  const [fecha, setFecha] = useState("");
   const [participantes, setParticipantes] = useState<AsistenciaDetalle[]>([]);
-  const [mensaje, setMensaje] = useState("")
 
-  const form = useForm<z.infer<typeof meetingFormSchema>>({
-    resolver: zodResolver(meetingFormSchema),
-    defaultValues: {
-      nombre: "",
-      fecha: "",
-      congregacion: "",
-      grupo: "",
-      // detalle: [] 
-    },
-  });
-
-
-
-  const onSubmit = async (data: z.infer<typeof meetingFormSchema>) => {
+  const onSubmit = async () => {
     try {
       setIsLoading(true);
       const reunion = {
-        nombre: data.nombre,
-        fecha: data.fecha,
-        congregacion: data.congregacion,
-        grupo: data.grupo,
-        // estado: true,
+        nombre,
+        fecha,
+        congregacion,
+        grupo,
+        estado: true,
         detalle: participantes,
       };
       await CreateMeetingAction(reunion as Meeting);
@@ -96,15 +70,7 @@ export const CreateMeetingForm = () => {
     router.push(`/main/reuniones`);
   };
   const loadMembers = async () => {
-    // console.log(form.getValues("congregacion"))
-    // console.log(form.getValues("grupo"))
-    if(form.getValues("congregacion") === "" || form.getValues("grupo") === ""){
-      setMensaje("Seleccione una congregación y un grupo")
-    }else{
-      setMensaje("")
-      getParticipantes(form.getValues("congregacion"), form.getValues("grupo"));
-    }
-    
+    getParticipantes(congregacion, grupo);
   };
   const getParticipantes = async (cong: string, grup: string) => {
     const miembrosData = await GetMembersByCongregationAndGroupAction(cong, grup);
@@ -160,92 +126,36 @@ export const CreateMeetingForm = () => {
 
       <Separator />
 
-      <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <div className="space-y-8">
         <div className="space-y-4">
           <h3 className="text-lg font-medium">Datos de la Reunión</h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
-            {/* <div className="space-y-2">
+            <div className="space-y-2">
               <Label>Nombre</Label>
               <Input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
-            </div> */}
+            </div>
 
-            <FormField
-                control={form.control}
-                name="nombre"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nombre</FormLabel>
-                    <FormControl>
-                      <Input disabled={isLoading} {...field} className="" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-
-            {/* <div className="space-y-2">
+            <div className="space-y-2">
               <Label>Fecha</Label>
               <Input
                 type="date"
                 value={fecha}
                 onChange={(e) => setFecha(e.target.value)}
               />
-            </div> */}
+            </div>
 
-            <FormField
-                control={form.control}
-                name="fecha"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha</FormLabel>
-                    <FormControl>
-                      <Input disabled={isLoading} type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-
-            <FormField
-                control={form.control}
-                name="congregacion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Congregación</FormLabel>
-                    <Select
-                      disabled={isLoading}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Seleccionar" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {
-                          congregaciones.map((congregacion)=>(
-                            <SelectItem key={congregacion.id} value={congregacion.id}>{congregacion.name}</SelectItem>    
-                          ))
-                        }
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-            {/* <div className="space-y-2">
+            <div className="space-y-2">
               <Label>Congregación</Label>
-              <Select onValueChange={(e)=>setCongregacion(e)} defaultValue={congregacion}>
+              <Select
+                // onValueChange={field.onChange}
+                onValueChange={(e)=>setCongregacion(e)}
+                // defaultValue={field.value}
+                defaultValue={congregacion}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -254,38 +164,9 @@ export const CreateMeetingForm = () => {
                   <SelectItem value="HU">Huanta</SelectItem>
                 </SelectContent>
               </Select>
-            </div> */}
+            </div>
 
-              <FormField
-                control={form.control}
-                name="grupo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Grupo</FormLabel>
-                    <Select
-                      disabled={isLoading}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Seleccionar" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {
-                          typeMeeting.map((grupo)=>
-                            <SelectItem key={grupo.id} value={grupo.id}>{grupo.name}</SelectItem>  
-                          )
-                        }
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-            {/* <div className="space-y-2">
+            <div className="space-y-2">
               <Label>Grupo</Label>
               <Select
                 // onValueChange={field.onChange}
@@ -305,13 +186,21 @@ export const CreateMeetingForm = () => {
                   
                 </SelectContent>
               </Select>
+            </div>
+
+
+            {/* <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-3">
+              <Checkbox
+              // checked={field.value}
+              // onCheckedChange={field.onChange}
+              />
+              <div className="space-y-1 leading-none">
+                <Label>Disponible</Label>
+                <Label>Esta reeunion estará disponible</Label>
+              </div>
             </div> */}
 
-            
-            <Button type="button" variant={"outline"} onClick={()=>loadMembers()} >Cargar Miembros</Button>
-             <Label className="text-red-500">{mensaje}</Label>
-
-            {/* <Button type="button" disabled={ (form.getValues("congregacion") === "" || form.getValues("grupo") === "" ) ? true : false } onClick={()=>loadMembers()}>Cargar Miembros</Button> */}
+            <Button type="button" onClick={()=>loadMembers()}>Cargar Miembros</Button>
           </div>
         </div>
 
@@ -355,16 +244,24 @@ export const CreateMeetingForm = () => {
         </div>
 
         <div className="flex justify-end space-x-4">
-          
-              <Button>
+          {
+            (congregacion !== "" && grupo !== "") ?
+            (
+              <Button type="button" onClick={onSubmit}>
+                {" "}
                 {isLoading ? <Loader className="animate-spin" /> : <Save />} Guardar
                 Reunión
               </Button>
-           
+            ):(
+              <Button type="button" disabled >
+                <Save />Guardar
+                Reunión
+              </Button>
+                )
+          }
           
         </div>
-      </form>
-      </Form>
+      </div>
     </>
   );
 };

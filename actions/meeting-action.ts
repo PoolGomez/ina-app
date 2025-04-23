@@ -91,12 +91,18 @@ export const DeleteMeetingAction = async (id: string) => {
     );
   }
 };
-export const UpdateMeetingAction = async (meeting: Meeting) => {
+export const UpdateMeetingAction = async (
+  meeting: Meeting
+  // id: string,
+  // nombre: string,
+  // detalle: AsistenciaDetalle[]
+) => {
   try {
     await updateDoc(doc(db, collectionName, meeting.id), {
-        fecha: meeting.fecha,
-        congregacion: meeting.congregacion,
-        estado: meeting.estado,
+        // fecha: meeting.fecha,
+        // congregacion: meeting.congregacion,
+        // estado: meeting.estado,
+        nombre: meeting.nombre,
         detalle: meeting.detalle
     }).catch((error) => {
       throw new Error(error);

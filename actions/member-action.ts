@@ -69,15 +69,27 @@ export const GetMembersByGroupIdAction = async (groupId: string) => {
     );
   }
 };
-export const GetMembersByCongregationAction = async (congregacion: string) => {
+export const GetMembersByCongregationAndGroupAction = async (congregacion: string, grupo: string) => {
   try {
-    const q = query(collection(db, collectionName), where("congregacion","==",congregacion));
+    let q
+    if(grupo === "ALL"){
+      q = query(
+        collection(db, collectionName), 
+        where("congregacion","==",congregacion)
+      );
+    }else{
+      q = query(
+        collection(db, collectionName), 
+        where("congregacion","==",congregacion),
+        where("grupo","==",grupo)
+      );
+    }
+
     const querySnapShot = await getDocs(q);
     const membersData = querySnapShot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Member[];
-
     return membersData;
   } catch (error) {
     throw new Error(

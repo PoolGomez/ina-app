@@ -26,9 +26,10 @@ export interface Member{
 
 export interface Meeting{
     id: string;
+    nombre:string;
     fecha: string;
     congregacion: string;
-    estado: boolean;
+    grupo: string;
     detalle: AsistenciaDetalle[]
 }
 export interface Attendance {

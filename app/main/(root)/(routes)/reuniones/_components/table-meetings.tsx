@@ -4,11 +4,10 @@ import { CellActionMobile } from "./cell-action-mobile";
 import { useState } from "react";
 import { Meeting } from "@/types-db";
 import { ArrowDownAZ, ArrowDownUp, ArrowDownZA } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { CellAction } from "./cell-action";
 import { format, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { getCongregationName } from "@/lib/data";
+import { getCongregationName, getMeetingName,  } from "@/lib/data";
 
 interface TableMeetingsProp {
     data: Meeting[]
@@ -75,6 +74,9 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
           if (value === meeting.congregacion) {
             return getCongregationName(value).toLowerCase().includes(searchTerm.toLowerCase());
           }
+          if(value === meeting.grupo){
+            return getMeetingName(value).toLowerCase().includes(searchTerm.toLowerCase());
+          }
           return value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       }
       
@@ -127,27 +129,28 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
                 {/* Parte izquierda*/}
                 <div className="flex flex-col">
                   <span className="text-lg font-semibold">
-                    {highlightText( formatDate(meeting.fecha), searchTerm)}
+                    {highlightText( meeting.nombre, searchTerm)}
                   </span>
                   <span className="text-sm text-gray-500">
-                    {highlightText(getCongregationName(meeting.congregacion), searchTerm)}
+                    {highlightText( formatDate(meeting.fecha), searchTerm)}
                   </span>
                 </div>
                 {/* Parte derecha*/}
                 <div className="flex flex-col items-end">
                   <span className="text-lg font-bold">
-                    {meeting.estado ? (
+                    {highlightText(getMeetingName(meeting.grupo), searchTerm )}
+                    {/* {meeting.estado ? (
                             <Badge>{highlightText("Disponible", searchTerm)}</Badge>
                             ) : (
                             <Badge variant="destructive">
                                 {highlightText("Desactivado", searchTerm)}
                             </Badge>
-                            )}
+                            )} */}
                   </span>
 
-                  {/* <span className="text-sm text-gray-500">
-                    {highlightText(member.grupo, searchTerm)}
-                  </span> */}
+                  <span className="text-sm text-gray-500">
+                    {highlightText(getCongregationName(meeting.congregacion), searchTerm)}
+                  </span>
                 </div>
               </div>
             </CellActionMobile>
@@ -160,6 +163,13 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
               <tr className="bg-accent border-b">
                 <th
                   className="items-center justify-start p-3 text-black-foreground cursor-pointer"
+                  onClick={() => handleSort("nombre")}
+                >
+                  Nombre {getSortIcon("nombre")}
+                </th>
+
+                <th
+                  className="items-center justify-start p-3 text-black-foreground cursor-pointer"
                   onClick={() => handleSort("fecha")}
                 >
                   Fecha {getSortIcon("fecha")}
@@ -170,11 +180,12 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
                 >
                   Congregación {getSortIcon("congregacion")}
                 </th>
+
                 <th
-                  className=" items-center justify-start p-3 text-black-foreground cursor-pointer"
-                  onClick={() => handleSort("estado")}
+                  className="items-center justify-start p-3 text-black-foreground cursor-pointer"
+                  onClick={() => handleSort("grupo")}
                 >
-                  Estado {getSortIcon("estado")}
+                  Grupo {getSortIcon("grupo")}
                 </th>
                 
                 <th className="p-3 text-black-foreground text-right md:table-cell">
@@ -187,20 +198,18 @@ const TableMeetings = ({data}:TableMeetingsProp) => {
               {filteredMeetings.map((meeting) => (
                 <tr key={meeting.id} className="border-b hover:bg-accent">
                   <td className="p-3 text-black-foreground">
+                    {highlightText( meeting.nombre, searchTerm)}
+                  </td>
+                  <td className="p-3 text-black-foreground">
                     {highlightText( formatDate(meeting.fecha), searchTerm)}
                   </td>
                   <td className="p-3 text-black-foreground">
                     {highlightText( getCongregationName(meeting.congregacion) , searchTerm)}
                   </td>
                   <td className="p-3 text-black-foreground">
-                    {meeting.estado ? (
-                                <Badge>{highlightText("Disponible", searchTerm)}</Badge>
-                                ) : (
-                                <Badge variant="destructive">
-                                    {highlightText("Desactivado", searchTerm)}
-                                </Badge>
-                                )}
+                    {highlightText( getMeetingName(meeting.grupo) , searchTerm)}
                   </td>
+                  
                   <td className="p-0 text-black-foreground text-right px-4">
                     <CellAction
                       id={meeting.id}

@@ -32,7 +32,7 @@ const memberFormSchema = z.object({
     lugar_nacimiento: z.string(),
     fecha_bautismo: z.string(),
     fecha_sellamiento: z.string(),
-    num_documento: z.string().min(1, "El documento de identidad es requerido"),
+    num_documento: z.string(),
     estado_civil: z.string(),
     fecha_matrimonio_civil: z.string(),
     direccion: z.string(),

@@ -1,9 +1,7 @@
 "use client";
-import { GetMembersByCongregationAction } from "@/actions/member-action";
 import { Heading } from "@/app/main/(root)/_components/heading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { AsistenciaDetalle, Meeting, Member } from "@/types-db";
@@ -13,10 +11,25 @@ import { useEffect, useState } from "react";
 import { AttendanceButton } from "../../_components/button-attendance";
 import { UpdateMeetingAction } from "@/actions/meeting-action";
 import toast from "react-hot-toast";
+import { congregaciones, typeMeeting } from "@/lib/data";
+import { GetMembersByCongregationAndGroupAction } from "@/actions/member-action";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface MeetingFormProps {
   data: Meeting | null;
 }
+
+const meetingFormSchema = z.object({
+  id: z.string(),
+  nombre: z.string().min(1, "El nombre es requerida"),
+  fecha: z.string().min(1, "La fecha es requerida"),
+  congregacion: z.string().min(1, "La congregación es requerida"),
+  grupo: z.string().min(1, "El grupo es requerido"),
+});
 
 export const MeetingForm = ({ data }: MeetingFormProps) => {
   const router = useRouter();
@@ -24,16 +37,30 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [miembros, setMiembros] = useState<Member[]>([]);
-  const [congregacion, setCongregacion] = useState(data?.congregacion);
-  const [fecha, setFecha] = useState(data?.fecha);
+  // const [congregacion, setCongregacion] = useState(data?.congregacion);
+  // const [nombre, setNombre] = useState(data?.nombre);
+  // const [fecha, setFecha] = useState(data?.fecha);
   const [participantes, setParticipantes] = useState<AsistenciaDetalle[]>(
     data?.detalle || []
   );
 
+  const form = useForm<z.infer<typeof meetingFormSchema>>({
+      resolver: zodResolver(meetingFormSchema),
+      defaultValues: {
+          id: data?.id,
+          nombre: data?.nombre,
+          fecha:data?.fecha,
+          congregacion: data?.congregacion,
+          grupo: data?.grupo
+          
+      },
+  });
+
+
   useEffect(() => {
 
     const getParticipantes = async () => {
-      const miembrosData = await GetMembersByCongregationAction(data?.congregacion as string);
+      const miembrosData = await GetMembersByCongregationAndGroupAction(data?.congregacion as string,data?.grupo as string);
       setMiembros(miembrosData);
       const datos = miembrosData.map((item) => {
         const result = data?.detalle.find((value) => value.miembroId === item.id);
@@ -55,14 +82,12 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
     getParticipantes();
   }, [data?.congregacion]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (dataForm: z.infer<typeof meetingFormSchema>) => {
     try {
       setIsLoading(true);
       await UpdateMeetingAction({
-        id: data?.id,
-        fecha,
-        congregacion,
-        estado: true,
+        id: dataForm.id,
+        nombre: dataForm.nombre,
         detalle: participantes,
       } as Meeting);
       toast.success("Reunion actualizado correctamente");
@@ -133,28 +158,139 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
 
       <Separator />
 
-      <div className="space-y-8">
+      <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="space-y-4">
           <h3 className="text-lg font-medium">Datos de la Reunión</h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div>
+
+            {/* <div className="space-y-2">
+              <Label>Nombre</Label>
+              <Input
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </div> */}
+            <FormField
+                  control={form.control}
+                  name="nombre"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nombre</FormLabel>
+                      <FormControl>
+                        <Input disabled={isLoading} {...field} className="" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+              />
+
+
+            {/* <div className="space-y-2">
               <Label>Fecha</Label>
               <Input
                 type="date"
-                value={fecha}
-                onChange={(e) => setFecha(e.target.value)}
+                disabled
+                value={data?.fecha}
+                // onChange={(e) => setFecha(e.target.value)}
               />
-            </div>
+            </div> */}
 
-            <div>
+                <FormField
+                  control={form.control}
+                  name="fecha"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Fecha</FormLabel>
+                      <FormControl>
+                        <Input disabled type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+
+
+            {/* <div className="space-y-2">
               <Label>Congregación</Label>
               <Input
                 type="text"
                 disabled
-                value={congregacion}
-                onChange={(e) => setCongregacion(e.target.value)}
+                value={getCongregationName(data?.congregacion || "")}
+                // onChange={(e) => setCongregacion(e.target.value)}
               />
-            </div>
+            </div> */}
+
+              <FormField
+                  control={form.control}
+                  name="congregacion"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Congregación</FormLabel>
+                      <Select
+                        disabled
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Seleccionar" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {congregaciones.map((congregacion)=>(
+                            <SelectItem key={congregacion.id} value={congregacion.id}>{congregacion.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+
+            {/* <div className="space-y-2">
+              <Label>Grupo</Label>
+              <Input
+                type="text"
+                disabled
+                value={getGroupName(data?.grupo || "")}
+                // onChange={(e) => setCongregacion(e.target.value)}
+              />
+            </div> */}
+
+              <FormField
+                control={form.control}
+                name="grupo"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Grupo</FormLabel>
+                    <Select
+                    disabled
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Seleccionar" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {
+                        typeMeeting.map((grupo)=>
+                          <SelectItem key={grupo.id} value={grupo.id}>{grupo.name}</SelectItem>  
+                        )
+                      }
+                        
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
           </div>
         </div>
@@ -205,13 +341,14 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
         </div>
 
         <div className="flex justify-end space-x-4">
-          <Button type="button" onClick={onSubmit}>
+          <Button>
             {" "}
             {isLoading ? <Loader className="animate-spin" /> : <Save />} Guardar
             Cambios
           </Button>
         </div>
-      </div>
+      </form>
+      </Form>
     </>
   );
 };
