@@ -80,7 +80,7 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
     };
 
     getParticipantes();
-  }, [data?.congregacion]);
+  }, [data?.congregacion, data?.detalle, data?.grupo]);
 
   const onSubmit = async (dataForm: z.infer<typeof meetingFormSchema>) => {
     try {

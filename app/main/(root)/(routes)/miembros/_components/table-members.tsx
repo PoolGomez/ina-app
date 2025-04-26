@@ -152,15 +152,15 @@ const TableMembers = ({ data }: TableMembersProp) => {
                 </th>
                 <th
                   className=" items-center justify-start p-3 text-black-foreground cursor-pointer"
-                  onClick={() => handleSort("celular")}
+                  onClick={() => handleSort("congregacion")}
                 >
-                  Congregación {getSortIcon("celular")}
+                  Congregación {getSortIcon("congregacion")}
                 </th>
                 <th
                   className=" items-center justify-start p-3 text-black-foreground cursor-pointer"
-                  onClick={() => handleSort("actividad_ina")}
+                  onClick={() => handleSort("grupo")}
                 >
-                  Grupo {getSortIcon("actividad_ina")}
+                  Grupo {getSortIcon("grupo")}
                 </th>
                 <th className="p-3 text-black-foreground text-right md:table-cell">
                   {/* {(isEdit || isDelete || isOwner) && "Acciones"} */}

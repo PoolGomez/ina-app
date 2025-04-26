@@ -40,6 +40,8 @@ const meetingFormSchema = z.object({
 });
 
 
+
+
 export const CreateMeetingForm = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
@@ -52,6 +54,9 @@ export const CreateMeetingForm = () => {
   // const [fecha, setFecha] = useState("");
   const [participantes, setParticipantes] = useState<AsistenciaDetalle[]>([]);
   const [mensaje, setMensaje] = useState("")
+
+
+ 
 
   const form = useForm<z.infer<typeof meetingFormSchema>>({
     resolver: zodResolver(meetingFormSchema),
@@ -159,6 +164,7 @@ export const CreateMeetingForm = () => {
       </div>
 
       <Separator />
+      
 
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

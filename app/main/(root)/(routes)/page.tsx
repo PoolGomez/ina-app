@@ -16,7 +16,25 @@ const MainPage = () => {
           Sistema de Gestión de Membresía
         </p>
         
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+
+        <Card>
+            <CardHeader>
+              <CardTitle>Dashboard</CardTitle>
+              <CardDescription>Ver las métricas y estadistícas</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/main/dashboard">
+                <Button variant="outline" className="w-full cursor-pointer">Ver Dashboard</Button>
+              </Link>
+            </CardContent>
+            {/* <CardFooter>
+            <Link href="/members">
+                <Button variant="outline" className="w-full">Ver Miembros</Button>
+              </Link>
+            </CardFooter> */}
+          </Card>
+
 
         <Card>
             <CardHeader>
@@ -38,11 +56,11 @@ const MainPage = () => {
           <Card>
             <CardHeader>
               <CardTitle>Reuniones</CardTitle>
-              <CardDescription>Ver y gestionar reuniones con sus asistencias</CardDescription>
+              <CardDescription>Ver y gestionar reuniones por grupos con sus asistencias</CardDescription>
             </CardHeader>
             <CardContent>
               <Link href="/main/reuniones">
-                <Button className="w-full cursor-pointer">Nuevo Registro</Button>
+                <Button className="w-full cursor-pointer">Ver Reuniones</Button>
               </Link>
             </CardContent>
             {/* <CardFooter>
@@ -57,9 +75,9 @@ const MainPage = () => {
           <Card>
             <CardHeader>
               <CardTitle>Reportes</CardTitle>
-              <CardDescription>Generar informes y estadísticas</CardDescription>
+              <CardDescription>Generar Reportes del directorio de miembros y reuniones</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className='items-end'>
               <Link href="/main/reportes">
                 <Button variant="outline" className="w-full cursor-pointer">Ver Reportes</Button>
               </Link>

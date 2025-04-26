@@ -1,14 +1,13 @@
 "use client"
 import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { BookOpenTextIcon, CalendarClock, CheckCheck, House, Users2 } from "lucide-react"
+import { BookOpenTextIcon, CalendarClock, ChartNoAxesCombined, CheckCheck, House, Users2 } from "lucide-react"
 import Link from "next/link"
-import { useParams, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 export const SideNav = () => {
     const pathname = usePathname()
-    const params = useParams()
     const routes = [
         // {
         //     href : `/main/registro`,
@@ -16,6 +15,12 @@ export const SideNav = () => {
         //     active : pathname === `/main/registro`,
         //     icon: UserPlus2,
         // },
+        {
+            href : `/main/dashboard`,
+            label :"Dashboard",
+            active : pathname === `/main/dashboard`,
+            icon: ChartNoAxesCombined,
+        },
         {
             href : `/main/miembros`,
             label :"Miembros",
@@ -41,7 +46,9 @@ export const SideNav = () => {
         <>
         <SidebarMenu>
             
-            <Collapsible asChild defaultOpen={pathname === `/alzu/${params.companyId}`} className="group/collapsible">
+            <Collapsible asChild 
+            // defaultOpen={pathname === "/alzu/main"} 
+            className="group/collapsible">
                 <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                         <SidebarMenuButton tooltip="Inicio">
@@ -68,7 +75,7 @@ export const SideNav = () => {
                     </CollapsibleTrigger>
                 </SidebarMenuItem>
             </Collapsible>
-            <SidebarGroupLabel>Modulos</SidebarGroupLabel>
+            
             {routes.map((route)=>(
                         <Collapsible 
                             key={route.label}

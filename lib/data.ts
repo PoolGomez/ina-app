@@ -1,3 +1,5 @@
+import { Book, BookOpen, Speaker, Activity, Users } from "lucide-react";
+
 export const grupos = [
     {
         id: "ED",
@@ -22,25 +24,42 @@ export const grupos = [
 ]
 export const typeMeeting = [
     {
-        id: "ED",
-        name: "Escuela Dominical"
+        id:"ALL",
+        name:"General",
+        icon: Users, //Users Speaker
+        color:"bg-blue-500",
+        textColor:"text-blue-500"
     },
     {
-        id: "JV",
-        name: "Jovenes"
+        id: "ED",
+        name: "Escuela Dominical",
+        icon: Book, //Child 
+        color: 'bg-amber-500',
+        textColor: 'text-amber-500',
     },
     {
         id: "HE",
-        name: "Hermanos"
+        name: "Hermanos",
+        icon: Speaker, // Speaker Users
+        color:"bg-blue-500",
+        textColor:"text-blue-500"
     },
+    {
+        id: "JV",
+        name: "Jovenes",
+        icon: Activity, 
+        color: 'bg-emerald-500',
+        textColor: 'text-emerald-500',
+    },
+    
     {
         id: "MI",
-        name: "Ministros"
+        name: "Ministros",
+        icon: BookOpen, //Cross
+        color: 'bg-purple-500',
+        textColor: 'text-purple-500',
     },
-    {
-        id:"ALL",
-        name:"General"
-    }
+    
 ]
 
 export const congregaciones = [
@@ -53,6 +72,8 @@ export const congregaciones = [
         name: "Huanta"
     },
 ]
+
+
 
 export const getCongregationName = (congregacionId: string) => {
     const congregacion = congregaciones.find((item) => item.id === congregacionId);
@@ -79,3 +100,32 @@ export const getMeetingName = (groupId: string) => {
     }
 }
 
+export const getMeetingType = (grupoId: string) => {
+    const meeting = typeMeeting.find((item) => item.id === grupoId);
+    return meeting
+}
+
+export const getColorMeetingType = (grupoId: string) => {
+    const meeting = typeMeeting.find((item) => item.id === grupoId);
+    if (meeting) {
+    return meeting.color;
+    } else {
+    return "";
+    }
+}
+export const getTextColorMeetingType = (grupoId: string) => {
+    const meeting = typeMeeting.find((item) => item.id === grupoId);
+    if (meeting) {
+    return meeting.textColor;
+    } else {
+    return "";
+    }
+}
+export const getIconMeetingType = (grupoId: string) => {
+    const meeting = typeMeeting.find((item) => item.id === grupoId);
+    if (meeting) {
+    return meeting.icon;
+    } else {
+    return "";
+    }
+}

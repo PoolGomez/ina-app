@@ -1,3 +1,4 @@
 {
-    "editor.quickSuggestions": false
+    "editor.quickSuggestions": false,
+    "bitoAI.codeCompletion.enableAutoCompletion": false
 }
