@@ -1,17 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Copy, Edit, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modal/alert-modal";
 import { DeleteMemberAction } from "@/actions/member-action";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu";
 
 interface CellActionProps {
   id: string;
@@ -73,12 +68,45 @@ export const CellActionMobile = ({
         onConfirm={onDelete}
         loading={isLoading}
       />
+
+    <ContextMenu>
+      <ContextMenuTrigger>{children}</ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem onClick={() => onCopy(id)}>
+          <Copy className="h-4 w-4 mr-2" />
+          Copiar Id
+        </ContextMenuItem>
+        {(isOwner || isEdit) && (
+            <ContextMenuItem
+              onClick={() =>
+                router.push(`/main/miembros/${id}`)
+              }
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Editar
+            </ContextMenuItem>
+          )}
+          {(isOwner || isDelete) && (
+            <ContextMenuItem onClick={() => setOpen(true)}>
+              <Trash className="h-4 w-4 mr-2" />
+              Borrar
+            </ContextMenuItem>
+          )}
+
+        {/* <ContextMenuItem>Team</ContextMenuItem>
+        <ContextMenuItem>Subscription</ContextMenuItem> */}
+      </ContextMenuContent>
+    </ContextMenu>
+
+
+      {/* <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={isLoading}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          {/* <Button className="h-8 w-8 " variant={"ghost"}>
-            <span className="sr-only">Open</span>
-            <MoreVertical className="h-4 w-4" />
-          </Button> */}
           {children}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
@@ -105,7 +133,7 @@ export const CellActionMobile = ({
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </>
   );
 };
