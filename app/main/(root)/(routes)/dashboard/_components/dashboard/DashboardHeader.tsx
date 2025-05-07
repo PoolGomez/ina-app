@@ -1,7 +1,7 @@
 
 import { FilterOptions } from '@/types-db';
 import { Select } from '../ui/Select';
-import { BarChart3 } from 'lucide-react';
+import { ChartNoAxesCombined } from 'lucide-react';
 import { congregaciones, typeMeeting } from '@/lib/data';
 import { Heading } from '@/app/main/(root)/_components/heading';
 
@@ -41,7 +41,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <div className="flex items-center">
           <div className="mr-3 bg-blue-100 p-2 rounded-lg">
-            <BarChart3 className="h-6 w-6 text-blue-600" />
+            <ChartNoAxesCombined className="h-6 w-6" />
           </div>
           {/* <h1 className="text-2xl font-bold text-gray-800">{title}</h1> */}
           <Heading title={title} description={description} />

@@ -1,8 +1,4 @@
 "use client"
-// import { BarChart3 } from "lucide-react"
-// import { Member } from "@/types-db"
-// import { Heading } from "../../../_components/heading"
-// import { Separator } from "@/components/ui/separator"
 import { DashboardHeader } from "./dashboard/DashboardHeader"
 import { Tabs } from "./ui/Tabs"
 import { useEffect, useState } from "react"
@@ -12,13 +8,7 @@ import { AttendanceSummaryStats } from "./dashboard/AttendanceSummaryStats"
 import { MeetingTypeAttendanceTrend } from "./dashboard/MeetingTypeAttendanceTrend"
 import { RecentMeetingsCard } from "./dashboard/RecentMeetingsCard"
 import { CongregationAttendanceChart } from "./dashboard/CongregationAttendanceChart"
-
-// import { Button } from "@/components/ui/button"
-// import { useRouter } from "next/navigation"
-// import { UserPlus2 } from "lucide-react"
-// import { useIsMobile } from "@/hooks/use-mobile"
-
-
+import { LoaderCircle } from "lucide-react"
 
 const DashboardClient = () => {
       const [meetings, setMeetings] = useState<Meeting[]>([]);
@@ -136,8 +126,8 @@ const DashboardClient = () => {
         if (loading) {
     return (
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-          <span className="ml-3 text-gray-600">Cargando datos...</span>
+          <LoaderCircle className="animate-spin h-12 w-12" />
+          <span className="ml-3 text-gray-600">Cargando...</span>
         </div>
     );
   }

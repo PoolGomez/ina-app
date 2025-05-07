@@ -10,6 +10,7 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  orderBy,
   // orderBy,
   query,
   updateDoc,
@@ -52,6 +53,23 @@ export const GetMembersAction = async(setMembers: (members: Member[]) => void) =
   // Devuelve la función de unsubscribe para que puedas dejar de escuchar cuando sea necesario
   return unsubscribe;
 };
+
+export const GetMembersAction2 = async() => {
+  try {
+      const q = query(collection(db, collectionName), orderBy("apellidos"));
+      const querySnapShot = await getDocs(q);
+      const meetingsData = querySnapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Member[];
+  
+      return meetingsData;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Error GetMembersAction2"
+    );
+  }
+}
 
 export const GetMembersByGroupIdAction = async (groupId: string) => {
   try {

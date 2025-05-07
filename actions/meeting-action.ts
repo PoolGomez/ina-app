@@ -45,6 +45,22 @@ export const GetMeetingsAction = async () => {
     );
   }
 };
+export const GetMeetingsAction2 = async() => {
+  try {
+      const q = query(collection(db, collectionName), orderBy("fecha"));
+      const querySnapShot = await getDocs(q);
+      const meetingsData = querySnapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Meeting[];
+  
+      return meetingsData;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Error GetMeetingsAction2"
+    );
+  }
+}
 export const GetMeetingsByCongregationAction = async (congregationId: string) => {
   try {
     const q = query(collection(db, collectionName), where("congregacion","==",congregationId));

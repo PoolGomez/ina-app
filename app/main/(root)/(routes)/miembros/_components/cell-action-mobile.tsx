@@ -64,7 +64,11 @@ export const CellActionMobile = ({
     <>
       <AlertModal
         isOpen={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+            location.reload();
+            setOpen(false);
+          }
+        }
         onConfirm={onDelete}
         loading={isLoading}
       />
@@ -93,8 +97,6 @@ export const CellActionMobile = ({
             </ContextMenuItem>
           )}
 
-        {/* <ContextMenuItem>Team</ContextMenuItem>
-        <ContextMenuItem>Subscription</ContextMenuItem> */}
       </ContextMenuContent>
     </ContextMenu>
 
