@@ -118,16 +118,23 @@ export const CreateMeetingForm = () => {
     const data = miembrosData.map((item) => {
       return {
         miembroId: item.id,
+        apellidos: item.apellidos,
+        nombres: item.nombres,
         valor: "F",
       };
     });
     setParticipantes(data as AsistenciaDetalle[]);
   };
 
-  const mostrarNombreParticipante = (id: string) => {
+  const mostrarNombresParticipante = (id: string) => {
     const result = miembros.find((item) => item.id === id);
-    const nombre = result?.apellidos + " " + result?.nombres;
+    const nombre = result?.nombres;
     return nombre;
+  };
+  const mostrarApellidosParticipante = (id: string) => {
+    const result = miembros.find((item) => item.id === id);
+    const apellidos = result?.apellidos;
+    return apellidos;
   };
 
   const updateAttendanceStatus = (
@@ -139,6 +146,8 @@ export const CreateMeetingForm = () => {
         if (participante.miembroId === id) {
           return {
             miembroId: id,
+            // apellidos: participante.apellidos,
+            // nombres: participante.nombres,
             valor: value,
           };
         }
@@ -330,9 +339,15 @@ export const CreateMeetingForm = () => {
               key={participante.miembroId}
               className="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-white"
             >
-              <span className="text-lg">
-                {mostrarNombreParticipante(participante.miembroId)}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-lg font-semibold">
+                  {mostrarApellidosParticipante(participante.miembroId)}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {mostrarNombresParticipante(participante.miembroId)}
+                </span>
+              </div>
+
               <div className="flex gap-2">
                 <AttendanceButton
                   status="A"

@@ -33,6 +33,8 @@ export interface Meeting{
 }
 export interface AsistenciaDetalle{
     miembroId: string;
+    // apellidos: string;
+    // nombres:string;
     valor: 'A'|'T'|'F'
 }
 

@@ -28,7 +28,7 @@ const memberFormSchema = z.object({
     apellidos: z.string().min(1, "Los apellidos son requeridos"),
     nombres: z.string().min(1, "Los nombres son requeridos"),
     genero: z.string().min(1, "El género es requerido"),
-    fecha_nacimiento: z.string().min(1, "La fecha de nacimiento es requerida"),
+    fecha_nacimiento: z.string(),
     lugar_nacimiento: z.string(),
     fecha_bautismo: z.string(),
     fecha_sellamiento: z.string(),

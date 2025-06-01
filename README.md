@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# INA APP
 
-## Getting Started
+Sistema de gestion de membresia y control de asistencias, con autenticación de usuario.
 
-First, run the development server:
+## Tecnologías
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://www.typescriptlang.org/">
+        <img src="https://res.cloudinary.com/dt8zu6zzd/logos/TypeScript.png" alt="TypeScript" width="50" height="50"><br>
+        TypeScript
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://nextjs.org/">
+        <img src="https://assets.vercel.com/image/upload/v1607554385/repositories/next-js/next-logo.png" alt="Next.js" width="50" height="50"><br>
+        Next.js
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://tailwindcss.com/">
+      <img src="https://files.raycast.com/50kq86d4gic47z6jp02htuxx2s4u" alt="Tailwind" width="50" height="50"><br>
+        Tailwind
+      </a>
+    </td> 
+    <td align="center">
+      <a href="https://ui.shadcn.com/">
+      <img src="https://avatars.githubusercontent.com/u/139895814?s=280&v=4" alt="Shadcnui" width="50" height="50"><br>
+        Shadcn/UI
+      </a>
+    </td>   
+    <td align="center">
+      <a href="https://firebase.google.com/">
+      <img src="https://w7.pngwing.com/pngs/246/288/png-transparent-firebase-hd-logo.png" alt="Firebase" width="50" height="50"><br>
+        Firebase
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.chartjs.org/">
+      <img src="https://www.chartjs.org/img/chartjs-logo.svg" alt="Chartjs" width="50" height="50"><br>
+        Chart.js
+      </a>
+    </td> 
+  </tr>
+</table>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Capturas
+![Imagen 1](public/preview/ina_app_01.png)
+![Imagen 1](public/preview/ina_app_02.png)
+![Imagen 1](public/preview/ina_app_03.png)
+![Imagen 1](public/preview/ina_app_04.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Control

@@ -44,6 +44,7 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
     data?.detalle || []
   );
 
+
   const form = useForm<z.infer<typeof meetingFormSchema>>({
       resolver: zodResolver(meetingFormSchema),
       defaultValues: {
@@ -126,6 +127,8 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
         if (participante.miembroId === id) {
           return {
             miembroId: id,
+            // apellidos: participante.apellidos,
+            // nombres: participante.nombres,
             valor: value,
           };
         }
@@ -298,7 +301,9 @@ export const MeetingForm = ({ data }: MeetingFormProps) => {
         <Separator />
 
         <div>
-          {participantes.map((participante) => (
+          {participantes
+          // .sort((a: AsistenciaDetalle, b: AsistenciaDetalle)=> a.apellidos.localeCompare(b.apellidos))
+          .map((participante) => (
             
             <div
               key={participante.miembroId}
