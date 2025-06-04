@@ -83,7 +83,6 @@ Ofrecer asistencia espiritual y cultivar una estrecha comunión en la cual cada 
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/2">
               <img 
-                // src="https://images.pexels.com/photos/8108063/pexels-photo-8108063.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
                 src="https://inaperu.org/wp-content/uploads/2020/04/ap-inicio.jpg"
                 alt="Nuestra comunidad" 
                 className="rounded-lg shadow-lg"
