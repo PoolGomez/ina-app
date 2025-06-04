@@ -63,6 +63,7 @@ export function LoginForm({
       form.setValue("password", password as string);
       handleLogin(email as string, password as string);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
   
