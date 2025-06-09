@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { LogInAction } from "@/actions/authentication-actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { setCookie } from "nookies";
+import { LoaderCircle } from "lucide-react";
 
 const formSchema = z.object({
   email: z
@@ -166,8 +167,11 @@ export function LoginForm({
                     )}
                   />
                 </div>
-                <Button type="submit" className="w-full">
-                  Iniciar Sesión
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading && (
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin"/>
+                )}
+                {isLoading ? "Iniciando Sesión" : "Iniciar Sesión"}
                 </Button>
                 <Button
                   type="button"
